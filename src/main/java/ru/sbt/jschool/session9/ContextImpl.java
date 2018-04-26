@@ -17,7 +17,7 @@ public class ContextImpl implements Context {
                 ft) {
             try {
                 if(future.isCancelled()) itc++;
-                if(future.get() == null) ctc++;
+                if(future.isDone()&&(future.get() == null)) ctc++;
             } catch (Exception e){
                 ftc++;
             }
@@ -25,7 +25,7 @@ public class ContextImpl implements Context {
     }
 
     @Override
-    public int getCompletedTaskCount() {
+    public int getCompletedTaskCount(){
         updateData();
         return ctc;
     }
@@ -52,6 +52,9 @@ public class ContextImpl implements Context {
 
     @Override
     public boolean isFinished() {
-        return false;
+        if(ftc>0) return false;
+        else
+            if(itc+ctc == ft.size()) return true;
+            else return false;
     }
 }

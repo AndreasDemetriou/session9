@@ -15,16 +15,19 @@ public class ExecutionManagerImpl implements ExecutionManager {
             lft.add(service.submit(task));
         }
         service.shutdown();
-        new Runnable(){
+        Runnable callbackRun = new Runnable(){
             @Override
             public void run() {
-                for (;;)
+                for(;;)
                     if (service.isTerminated()){
                         callback.run();
                         break;
                     }
             }
-        }.run();
+        };
+        ExecutorService serviceForCallback = Executors.newFixedThreadPool(1);
+        serviceForCallback.submit(callbackRun);
+        serviceForCallback.shutdown();
         return new ContextImpl(lft);
     }
 }

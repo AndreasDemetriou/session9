@@ -1,5 +1,6 @@
 package ru.sbt.jschool.session9;
 
+
 /**
  */
 public interface Context {

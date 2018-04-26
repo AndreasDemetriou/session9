@@ -1,7 +1,7 @@
 package ru.sbt.jschool.session9;
 
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Runnable callback =  new Runnable() {
             @Override
             public void run() {
@@ -43,7 +43,7 @@ public class Test {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(4000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -51,8 +51,16 @@ public class Test {
             }
         };
         Context cnt = new ExecutionManagerImpl().execute(callback,a,b,c);
+        System.out.println("Ok, context returned immediately!");
+        System.out.println();
         System.out.println("Completed tasks: " + cnt.getCompletedTaskCount());
         System.out.println("Failed tasks: " + cnt.getFailedTaskCount());
-
+        System.out.println(cnt.isFinished());
+        System.out.println();
+        Thread.sleep(6000);
+        System.out.println();
+        System.out.println("Completed tasks: " + cnt.getCompletedTaskCount());
+        System.out.println("Failed tasks: " + cnt.getFailedTaskCount());
+        System.out.println(cnt.isFinished());
     }
 }
