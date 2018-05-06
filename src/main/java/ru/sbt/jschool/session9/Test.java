@@ -23,17 +23,22 @@ public class Test {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Context cnt = new ExecutionManagerImpl().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("Inner b callback");
-                    }
-                }, new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("Inner b");
-                    }
-                });
+                Context cnt = null;
+                try {
+                    cnt = new ExecutionManagerImpl().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("Inner b callback");
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("Inner b");
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(cnt.getCompletedTaskCount()+" Completed in b");
                 System.out.println("Hello from b!");
                 int x = 1/0;// provoke an exception to check counter of failed tasks

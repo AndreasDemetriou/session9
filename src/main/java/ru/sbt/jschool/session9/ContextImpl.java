@@ -8,11 +8,11 @@ public class ContextImpl implements Context {
     ContextImpl(List<Future> ft){
         this.ft = ft;
     }
-    private int ctc,ftc,itc;
+    private volatile int ctc,ftc,itc;
     private void updateData(){
-        ctc = 0;
-        ftc = 0;
-        itc = 0;
+        int ctc = 0;
+        int ftc = 0;
+        int itc = 0;
         for (Future future:
                 ft) {
             try {
@@ -22,6 +22,9 @@ public class ContextImpl implements Context {
                 ftc++;
             }
         }
+        this.ctc = ctc;
+        this.ftc = ftc;
+        this.itc = itc;
     }
 
     @Override
